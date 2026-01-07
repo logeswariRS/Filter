@@ -13,7 +13,7 @@ interface NumberFilterInputProps {
  * Supports: Equals, Greater Than, Less Than, Greater Than or Equal, Less Than or Equal
  */
 export const NumberFilterInput: React.FC<NumberFilterInputProps> = ({
-  operator,
+  operator: _operator,
   value,
   onChange,
 }) => {

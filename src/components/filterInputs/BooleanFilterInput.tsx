@@ -13,7 +13,7 @@ interface BooleanFilterInputProps {
  * Supports: Is
  */
 export const BooleanFilterInput: React.FC<BooleanFilterInputProps> = ({
-  operator,
+  operator: _operator,
   value,
   onChange,
 }) => {

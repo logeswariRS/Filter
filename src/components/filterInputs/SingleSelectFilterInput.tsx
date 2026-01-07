@@ -1,5 +1,5 @@
 import React from 'react';
-import { Select, MenuItem, FormControl, InputLabel } from '@mui/material';
+import { Select, MenuItem, FormControl } from '@mui/material';
 import { SingleSelectOperator } from '../../types';
 
 interface SingleSelectFilterInputProps {
@@ -14,7 +14,7 @@ interface SingleSelectFilterInputProps {
  * Supports: Is, Is Not
  */
 export const SingleSelectFilterInput: React.FC<SingleSelectFilterInputProps> = ({
-  operator,
+  operator: _operator,
   value,
   onChange,
   options,

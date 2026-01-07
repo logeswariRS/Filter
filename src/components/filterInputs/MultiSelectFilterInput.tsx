@@ -14,7 +14,7 @@ interface MultiSelectFilterInputProps {
  * Supports: In, Not In
  */
 export const MultiSelectFilterInput: React.FC<MultiSelectFilterInputProps> = ({
-  operator,
+  operator: _operator,
   value,
   onChange,
   options,

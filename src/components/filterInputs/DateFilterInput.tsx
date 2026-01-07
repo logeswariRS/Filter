@@ -13,7 +13,7 @@ interface DateFilterInputProps {
  * Supports: Between (date range)
  */
 export const DateFilterInput: React.FC<DateFilterInputProps> = ({
-  operator,
+  operator: _operator,
   value,
   onChange,
 }) => {

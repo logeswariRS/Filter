@@ -13,7 +13,7 @@ interface TextFilterInputProps {
  * Supports: Equals, Contains, Starts With, Ends With, Does Not Contain
  */
 export const TextFilterInput: React.FC<TextFilterInputProps> = ({
-  operator,
+  operator: _operator,
   value,
   onChange,
 }) => {

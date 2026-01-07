@@ -13,7 +13,7 @@ interface AmountFilterInputProps {
  * Supports: Between (amount range)
  */
 export const AmountFilterInput: React.FC<AmountFilterInputProps> = ({
-  operator,
+  operator: _operator,
   value,
   onChange,
 }) => {

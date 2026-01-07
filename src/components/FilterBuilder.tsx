@@ -7,7 +7,7 @@ import {
   Divider,
 } from '@mui/material';
 import { Plus, X, Filter } from 'lucide-react';
-import { FilterCondition } from '../types';
+import { FilterCondition, Operator } from '../types';
 import { fieldDefinitions, getOperatorsForFieldType } from '../types/fieldDefinitions';
 import { FilterRow } from './FilterRow';
 
@@ -26,7 +26,7 @@ export const FilterBuilder: React.FC<FilterBuilderProps> = ({
 }) => {
   const handleAddFilter = () => {
     const firstField = fieldDefinitions[0];
-    const firstOperator = getOperatorsForFieldType(firstField.type)[0];
+    const firstOperator = getOperatorsForFieldType(firstField.type)[0] as Operator;
     
     const newCondition: FilterCondition = {
       id: `filter-${Date.now()}-${Math.random()}`,
@@ -51,7 +51,7 @@ export const FilterBuilder: React.FC<FilterBuilderProps> = ({
           return {
             ...condition,
             field: fieldId,
-            operator: operators[0],
+            operator: operators[0] as Operator,
             value: getDefaultValueForFieldType(newField.type),
           };
         }
@@ -64,7 +64,7 @@ export const FilterBuilder: React.FC<FilterBuilderProps> = ({
   const handleOperatorChange = (id: string, operator: string) => {
     const newConditions = conditions.map(condition => {
       if (condition.id === id) {
-        return { ...condition, operator };
+        return { ...condition, operator: operator as Operator };
       }
       return condition;
     });
