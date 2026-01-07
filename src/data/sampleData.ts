@@ -5,6 +5,3 @@ import { generateSampleData } from './generateSampleData';
  * This data is used for client-side filtering demonstration
  */
 export const sampleEmployees = generateSampleData();
-
-
-

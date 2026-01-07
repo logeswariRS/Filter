@@ -39,6 +39,9 @@ export const MultiSelectFilterInput: React.FC<MultiSelectFilterInputProps> = ({
           return `${selected.length} selected`;
         }}
         variant="outlined"
+        sx={{
+          borderRadius: 1,
+        }}
       >
         {options.map((option) => (
           <MenuItem key={option} value={option}>
@@ -50,6 +53,3 @@ export const MultiSelectFilterInput: React.FC<MultiSelectFilterInputProps> = ({
     </FormControl>
   );
 };
-
-
-

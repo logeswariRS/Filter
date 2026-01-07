@@ -8,14 +8,16 @@ import {
   Grid,
   FormControl,
   InputLabel,
+  Chip,
 } from '@mui/material';
 import { Trash2 } from 'lucide-react';
-import { FilterCondition, FieldDefinition } from '../types';
+import { FilterCondition } from '../types';
 import { fieldDefinitions, getOperatorsForFieldType, getOperatorLabel } from '../types/fieldDefinitions';
 import { FilterInput } from './filterInputs';
 
 interface FilterRowProps {
   condition: FilterCondition;
+  index: number;
   onFieldChange: (fieldId: string) => void;
   onOperatorChange: (operator: string) => void;
   onValueChange: (value: any) => void;
@@ -28,6 +30,7 @@ interface FilterRowProps {
  */
 export const FilterRow: React.FC<FilterRowProps> = ({
   condition,
+  index,
   onFieldChange,
   onOperatorChange,
   onValueChange,
@@ -70,13 +73,46 @@ export const FilterRow: React.FC<FilterRowProps> = ({
 
   return (
     <Paper
-      elevation={1}
+      elevation={2}
       sx={{
-        p: 2,
-        mb: 2,
+        p: 2.5,
         backgroundColor: 'background.paper',
+        borderRadius: 2,
+        border: '1px solid',
+        borderColor: 'divider',
+        transition: 'all 0.2s ease',
+        position: 'relative',
+        '&:hover': {
+          boxShadow: 4,
+          borderColor: 'primary.light',
+        },
       }}
     >
+      <Box sx={{ display: 'flex', alignItems: 'center', mb: 1.5 }}>
+        <Chip
+          label={`Filter ${index + 1}`}
+          size="small"
+          color="primary"
+          variant="outlined"
+          sx={{ fontWeight: 600, mr: 1 }}
+        />
+        <Box sx={{ flexGrow: 1 }} />
+        <IconButton
+          onClick={onRemove}
+          color="error"
+          size="small"
+          aria-label="Remove filter"
+          sx={{
+            '&:hover': {
+              backgroundColor: 'error.light',
+              color: 'white',
+            },
+          }}
+        >
+          <Trash2 size={18} />
+        </IconButton>
+      </Box>
+
       <Grid container spacing={2} alignItems="center">
         <Grid item xs={12} sm={3}>
           <FormControl fullWidth size="small">
@@ -86,6 +122,9 @@ export const FilterRow: React.FC<FilterRowProps> = ({
               onChange={handleFieldChange}
               label="Field"
               variant="outlined"
+              sx={{
+                borderRadius: 1,
+              }}
             >
               {fieldDefinitions.map((field) => (
                 <MenuItem key={field.id} value={field.id}>
@@ -104,6 +143,9 @@ export const FilterRow: React.FC<FilterRowProps> = ({
               onChange={handleOperatorChange}
               label="Operator"
               variant="outlined"
+              sx={{
+                borderRadius: 1,
+              }}
             >
               {availableOperators.map((operator) => (
                 <MenuItem key={operator} value={operator}>
@@ -114,7 +156,7 @@ export const FilterRow: React.FC<FilterRowProps> = ({
           </FormControl>
         </Grid>
 
-        <Grid item xs={12} sm={5}>
+        <Grid item xs={12} sm={6}>
           {selectedField && (
             <FilterInput
               field={selectedField}
@@ -123,23 +165,7 @@ export const FilterRow: React.FC<FilterRowProps> = ({
             />
           )}
         </Grid>
-
-        <Grid item xs={12} sm={1}>
-          <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-            <IconButton
-              onClick={onRemove}
-              color="error"
-              size="small"
-              aria-label="Remove filter"
-            >
-              <Trash2 size={18} />
-            </IconButton>
-          </Box>
-        </Grid>
       </Grid>
     </Paper>
   );
 };
-
-
-

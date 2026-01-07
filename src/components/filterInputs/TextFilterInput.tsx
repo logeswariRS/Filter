@@ -25,9 +25,11 @@ export const TextFilterInput: React.FC<TextFilterInputProps> = ({
       value={value || ''}
       onChange={(e) => onChange(e.target.value)}
       variant="outlined"
+      sx={{
+        '& .MuiOutlinedInput-root': {
+          borderRadius: 1,
+        },
+      }}
     />
   );
 };
-
-
-

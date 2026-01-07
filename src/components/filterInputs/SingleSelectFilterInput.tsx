@@ -26,6 +26,9 @@ export const SingleSelectFilterInput: React.FC<SingleSelectFilterInputProps> = (
         onChange={(e) => onChange(e.target.value)}
         displayEmpty
         variant="outlined"
+        sx={{
+          borderRadius: 1,
+        }}
       >
         <MenuItem value="">
           <em>Select option...</em>
@@ -39,6 +42,3 @@ export const SingleSelectFilterInput: React.FC<SingleSelectFilterInputProps> = (
     </FormControl>
   );
 };
-
-
-

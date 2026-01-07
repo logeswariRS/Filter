@@ -14,7 +14,6 @@ import {
 } from '@mui/material';
 import { Employee } from '../types';
 import { getNestedValue } from '../utils/filtering';
-import { fieldDefinitions } from '../types/fieldDefinitions';
 
 interface DataTableProps {
   data: Employee[];
@@ -71,7 +70,19 @@ export const DataTable: React.FC<DataTableProps> = ({ data }) => {
       return (
         <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
           {value.map((item, index) => (
-            <Chip key={index} label={item} size="small" />
+            <Chip 
+              key={index} 
+              label={item} 
+              size="small" 
+              sx={{
+                backgroundColor: 'primary.light',
+                color: 'white',
+                fontWeight: 500,
+                '&:hover': {
+                  backgroundColor: 'primary.main',
+                },
+              }}
+            />
           ))}
         </Box>
       );
@@ -101,7 +112,16 @@ export const DataTable: React.FC<DataTableProps> = ({ data }) => {
     
     // Handle boolean
     if (typeof value === 'boolean') {
-      return value ? 'Yes' : 'No';
+      return (
+        <Chip
+          label={value ? 'Yes' : 'No'}
+          size="small"
+          color={value ? 'success' : 'default'}
+          sx={{
+            fontWeight: 600,
+          }}
+        />
+      );
     }
     
     return String(value);
@@ -125,17 +145,32 @@ export const DataTable: React.FC<DataTableProps> = ({ data }) => {
   ];
 
   return (
-    <TableContainer component={Paper} elevation={2}>
-      <Table sx={{ minWidth: 650 }} size="small">
+    <TableContainer 
+      component={Paper} 
+      elevation={3}
+      sx={{
+        borderRadius: 2,
+        overflow: 'hidden',
+        border: '1px solid',
+        borderColor: 'divider',
+      }}
+    >
+      <Table sx={{ minWidth: 650 }} size="medium">
         <TableHead>
-          <TableRow sx={{ backgroundColor: 'primary.main' }}>
+          <TableRow 
+            sx={{ 
+              background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+            }}
+          >
             {columns.map((column) => (
               <TableCell
                 key={column.id}
                 sx={{
-                  color: 'primary.contrastText',
-                  fontWeight: 'bold',
+                  color: 'white',
+                  fontWeight: 600,
                   whiteSpace: 'nowrap',
+                  fontSize: '0.875rem',
+                  py: 2,
                 }}
               >
                 {column.sortable ? (
@@ -144,18 +179,22 @@ export const DataTable: React.FC<DataTableProps> = ({ data }) => {
                     direction={sortField === column.path ? sortDirection : 'asc'}
                     onClick={() => handleSort(column.path as SortField)}
                     sx={{
-                      color: 'primary.contrastText',
+                      color: 'white !important',
                       '&.MuiTableSortLabel-root': {
-                        color: 'primary.contrastText',
+                        color: 'white',
                       },
                       '&.MuiTableSortLabel-root:hover': {
-                        color: 'primary.contrastText',
+                        color: 'rgba(255, 255, 255, 0.8)',
                       },
                       '&.Mui-active': {
-                        color: 'primary.contrastText',
+                        color: 'white',
                       },
                       '& .MuiTableSortLabel-icon': {
-                        color: 'primary.contrastText !important',
+                        color: 'white !important',
+                        opacity: 0.7,
+                      },
+                      '&.Mui-active .MuiTableSortLabel-icon': {
+                        opacity: 1,
                       },
                     }}
                   >
@@ -171,27 +210,42 @@ export const DataTable: React.FC<DataTableProps> = ({ data }) => {
         <TableBody>
           {sortedData.length === 0 ? (
             <TableRow>
-              <TableCell colSpan={columns.length} align="center" sx={{ py: 4 }}>
-                <Typography variant="body1" color="text.secondary">
-                  No results found
-                </Typography>
+              <TableCell colSpan={columns.length} align="center" sx={{ py: 8 }}>
+                <Box sx={{ textAlign: 'center' }}>
+                  <Typography variant="h6" color="text.secondary" gutterBottom>
+                    No results found
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    Try adjusting your filters to see more results
+                  </Typography>
+                </Box>
               </TableCell>
             </TableRow>
           ) : (
-            sortedData.map((row) => (
+            sortedData.map((row, rowIndex) => (
               <TableRow
                 key={row.id}
                 sx={{
-                  '&:nth-of-type(odd)': {
-                    backgroundColor: 'action.hover',
-                  },
+                  backgroundColor: rowIndex % 2 === 0 ? 'background.paper' : 'action.hover',
+                  transition: 'background-color 0.2s ease',
                   '&:hover': {
                     backgroundColor: 'action.selected',
+                    transform: 'scale(1.001)',
+                  },
+                  '& td': {
+                    borderBottom: '1px solid',
+                    borderColor: 'divider',
                   },
                 }}
               >
                 {columns.map((column) => (
-                  <TableCell key={column.id}>
+                  <TableCell 
+                    key={column.id}
+                    sx={{
+                      py: 1.5,
+                      fontSize: '0.875rem',
+                    }}
+                  >
                     {formatCellValue(getNestedValue(row, column.path), column.path)}
                   </TableCell>
                 ))}
@@ -203,6 +257,3 @@ export const DataTable: React.FC<DataTableProps> = ({ data }) => {
     </TableContainer>
   );
 };
-
-
-

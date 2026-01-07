@@ -1,5 +1,5 @@
 import React from 'react';
-import { TextField, Box } from '@mui/material';
+import { TextField, Box, Typography } from '@mui/material';
 import { DateOperator } from '../../types';
 
 interface DateFilterInputProps {
@@ -32,7 +32,7 @@ export const DateFilterInput: React.FC<DateFilterInputProps> = ({
   };
 
   return (
-    <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
+    <Box sx={{ display: 'flex', gap: 1.5, alignItems: 'center' }}>
       <TextField
         size="small"
         type="date"
@@ -42,7 +42,16 @@ export const DateFilterInput: React.FC<DateFilterInputProps> = ({
         variant="outlined"
         InputLabelProps={{ shrink: true }}
         inputProps={{ max: value.to || undefined }}
+        sx={{
+          flex: 1,
+          '& .MuiOutlinedInput-root': {
+            borderRadius: 1,
+          },
+        }}
       />
+      <Typography variant="body2" color="text.secondary" sx={{ px: 1 }}>
+        to
+      </Typography>
       <TextField
         size="small"
         type="date"
@@ -52,10 +61,13 @@ export const DateFilterInput: React.FC<DateFilterInputProps> = ({
         variant="outlined"
         InputLabelProps={{ shrink: true }}
         inputProps={{ min: value.from || undefined }}
+        sx={{
+          flex: 1,
+          '& .MuiOutlinedInput-root': {
+            borderRadius: 1,
+          },
+        }}
       />
     </Box>
   );
 };
-
-
-

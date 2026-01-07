@@ -30,6 +30,3 @@ export const BooleanFilterInput: React.FC<BooleanFilterInputProps> = ({
     />
   );
 };
-
-
-

@@ -6,7 +6,7 @@ import {
   Paper,
   Divider,
 } from '@mui/material';
-import { Plus, X } from 'lucide-react';
+import { Plus, X, Filter } from 'lucide-react';
 import { FilterCondition } from '../types';
 import { fieldDefinitions, getOperatorsForFieldType } from '../types/fieldDefinitions';
 import { FilterRow } from './FilterRow';
@@ -87,25 +87,56 @@ export const FilterBuilder: React.FC<FilterBuilderProps> = ({
 
   return (
     <Paper
-      elevation={2}
+      elevation={3}
       sx={{
         p: 3,
         mb: 3,
         backgroundColor: 'background.paper',
+        borderRadius: 2,
+        border: '1px solid',
+        borderColor: 'divider',
+        transition: 'all 0.3s ease',
+        '&:hover': {
+          boxShadow: 6,
+        },
       }}
     >
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
-        <Typography variant="h6" component="h2">
-          Filters
-        </Typography>
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+          <Filter size={24} color="#1976d2" />
+          <Typography variant="h6" component="h2" fontWeight={600}>
+            Filters
+          </Typography>
+          {conditions.length > 0 && (
+            <Typography
+              variant="caption"
+              sx={{
+                ml: 1,
+                px: 1,
+                py: 0.5,
+                backgroundColor: 'primary.light',
+                color: 'white',
+                borderRadius: 1,
+                fontWeight: 600,
+              }}
+            >
+              {conditions.length} active
+            </Typography>
+          )}
+        </Box>
         <Box sx={{ display: 'flex', gap: 1 }}>
           {conditions.length > 0 && (
             <Button
               variant="outlined"
               color="error"
-              size="small"
-              startIcon={<X size={16} />}
+              size="medium"
+              startIcon={<X size={18} />}
               onClick={handleClearAll}
+              sx={{
+                borderRadius: 2,
+                textTransform: 'none',
+                fontWeight: 500,
+              }}
             >
               Clear All
             </Button>
@@ -113,35 +144,53 @@ export const FilterBuilder: React.FC<FilterBuilderProps> = ({
           <Button
             variant="contained"
             color="primary"
-            size="small"
-            startIcon={<Plus size={16} />}
+            size="medium"
+            startIcon={<Plus size={18} />}
             onClick={handleAddFilter}
+            sx={{
+              borderRadius: 2,
+              textTransform: 'none',
+              fontWeight: 600,
+              boxShadow: 2,
+              '&:hover': {
+                boxShadow: 4,
+              },
+            }}
           >
             Add Filter
           </Button>
         </Box>
       </Box>
 
-      <Divider sx={{ mb: 2 }} />
+      <Divider sx={{ mb: 3 }} />
 
       {conditions.length === 0 ? (
         <Box
           sx={{
             textAlign: 'center',
-            py: 4,
-            color: 'text.secondary',
+            py: 6,
+            px: 2,
+            backgroundColor: 'action.hover',
+            borderRadius: 2,
+            border: '2px dashed',
+            borderColor: 'divider',
           }}
         >
-          <Typography variant="body2">
-            No filters applied. Click "Add Filter" to start filtering your data.
+          <Filter size={48} color="#9e9e9e" style={{ marginBottom: 16, opacity: 0.5 }} />
+          <Typography variant="body1" color="text.secondary" fontWeight={500}>
+            No filters applied
+          </Typography>
+          <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
+            Click "Add Filter" to start filtering your data
           </Typography>
         </Box>
       ) : (
-        <Box>
-          {conditions.map((condition) => (
+        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+          {conditions.map((condition, index) => (
             <FilterRow
               key={condition.id}
               condition={condition}
+              index={index}
               onFieldChange={(fieldId) => handleFieldChange(condition.id, fieldId)}
               onOperatorChange={(operator) => handleOperatorChange(condition.id, operator)}
               onValueChange={(value) => handleValueChange(condition.id, value)}
@@ -171,6 +220,3 @@ function getDefaultValueForFieldType(type: string): any {
       return '';
   }
 }
-
-
-

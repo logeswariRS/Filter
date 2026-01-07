@@ -39,9 +39,11 @@ export const NumberFilterInput: React.FC<NumberFilterInputProps> = ({
       onChange={handleChange}
       variant="outlined"
       inputProps={{ step: 'any' }}
+      sx={{
+        '& .MuiOutlinedInput-root': {
+          borderRadius: 1,
+        },
+      }}
     />
   );
 };
-
-
-

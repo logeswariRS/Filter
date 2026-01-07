@@ -1,4 +1,4 @@
-import { Employee, FilterCondition, FieldDefinition } from '../types';
+import { Employee, FilterCondition } from '../types';
 import { fieldDefinitions } from '../types/fieldDefinitions';
 
 /**
